@@ -1,0 +1,20 @@
+Tema 2 - Maze solver
+Dumitru Paul-Cristian
+332AB
+
+Regula dupa care am conceput automatul acestei teme si care coincide cu regula de dreapta a algoritmului wall follower este urmatoarea: de fiecare data cand gasesc oportunitatea de a face dreapta fac dreapta, daca nu, incerc sa ma deplasez inainte, daca nici inainte nu ma pot deplasa ma intorc pe unde am venit si reiau algoritmul din nou.
+Cu aceasta implementare am astfel 5 stari, unde o stare este inutila fiind starea de final din care automatul nu mai iese si nu se intampla nimic.
+
+starea "start": aici definesc pozitia curenta pe care ma aflu in labirint aceasta fiind pozitia de inceput, dar o si marchez ca fiind o pozitie deja parcursa. Aceasta stare duce mai departea in starea "verif".
+
+starea "verif": conform algoritmului si etapei curente(1*) de verificare (inainte sau dreapta) aceasta stare seteaza row si col astfel incat sa pot obtine informatii despre pozitiile care ma intereseaza din jurul pozitiei actuale.(2*)
+(1*) etapa curenta este setata pe posedge clk odata cu starea curenta, etapa urmatoare este stabilita in starea "citire" si initializata in "start" ca fiind verificare la dreapta
+(2*) starea este posibila cu ajutorul unui registru de 2 biti numit "directie" care porneste initial pe dreapta si se schimba corespunzator in functie de directia in care vreau sa ma uit
+
+starea "skip": folosita ca stare suplimentara de debug, doar face transferul la starea "citire" dupa un ciclu de ceas
+
+starea "citire": folosita pentru a prelucra rezultatul oferit de starea "verif" si a respecta algoritmul dorit (vezi comentarii cod), poate duce inapoi in "verif" sau in starea 0
+
+starea 0: stare goala, finala
+
+Output-ul done devine 1 in starea citire doar daca s-a ajuns cu pozitia curenta pe unul din peretii labirintului.
